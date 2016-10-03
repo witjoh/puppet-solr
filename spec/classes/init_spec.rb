@@ -5,7 +5,6 @@ describe 'solr' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
         context "where params are not passed (default case)" do
-          it { is_expected.to contain_class('solr::params') }
           it { is_expected.to contain_class('solr::install') }
           it do 
             is_expected.to contain_class('solr::config').with(
@@ -26,7 +25,6 @@ describe 'solr' do
               :dist_root => '/opt/tmpdata',
             }
           end
-          it { is_expected.to contain_class('solr::params') }
           it { is_expected.to contain_class('solr::install') }
           it do 
             is_expected.to contain_class('solr::config').with(

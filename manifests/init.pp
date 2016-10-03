@@ -37,40 +37,18 @@
 #
 
 class solr (
-  $cores      = 'UNSET',
-  $version    = 'UNSET',
-  $mirror     = 'UNSET',
-  $dist_root  = 'UNSET',
-) {
-
-  include solr::params
-
-  $my_cores = $cores ? {
-    'UNSET'   => $::solr::params::cores,
-    default   => $cores,
-  }
-
-  $my_version = $version ? {
-    'UNSET'   => $::solr::params::solr_version,
-    default   => $version,
-  }
-
-  $my_mirror = $mirror ? {
-    'UNSET'   => $::solr::params::mirror_site,
-    default   => $mirror,
-  }
-
-  $my_dist_root = $dist_root ? {
-    'UNSET'   => $::solr::params::dist_root,
-    default   => $dist_root,
-  }
+  $cores      = $::solr::params::cores,
+  $version    = $::solr::params::version,
+  $mirror     = $::solr::params::mirror,
+  $dist_root  = $::solr::params::dist_root,
+) inherits ::solr::params {
 
   class {'solr::install': } ->
   class {'solr::config':
-    cores     => $my_cores,
-    version   => $my_version,
-    mirror    => $my_mirror,
-    dist_root => $my_dist_root,
+    cores     => $cores,
+    version   => $version,
+    mirror    => $mirror,
+    dist_root => $dist_root,
   } ~>
   class {'solr::service': } ->
   Class['solr']
